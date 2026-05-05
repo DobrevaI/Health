@@ -1,2 +1,29 @@
 import streamlit as st
-bad_ingredients = ["E110" "Sunset Yellow FCF", "palm oil", "E102", "Tartrazine", "E132" "Indigotine", "Indigo Carmine", "hydrogenated oils", "high-fructose corn syrup", "sodium nitrite", "potassium bromate", "E151", "Black PN", "E154", "Brown FK", "E210", "Benzoic acid", "E296", "Malic Acid", "E310", "Propyl Gallate", "E320", "E322", "Lecithin", "E553b", "Talc", "Talcum"]
+bad_ingredients = ["E310", "Propyl Gallate", "E320", "E322", "Lecithin", "E553b", "Talc", "Talcum"]
+import streamlit as st
+import easyocr
+import numpy as np
+from PIL import Image
+# Вредни Е-номера
+harmful_e_numbers = {
+"E407": "Карагенан (възпаления, храносмилателни проблеми)",
+"Е621": "Натриев глутамат (главоболие, алергии)",
+"E262": "Натриев ацетат (дразни стомаха)",
+"Е300": "Аскорбинова киселина (в големи дози дразни стомаха)",
+"Е330": "Лимонена киселина (уврежда зъбния емайл)",
+"E250": "Натриев нитрит (риск от онкологични заболявания)",
+"E952": "Цикламат подсладител",
+"E471": "Емулгатор",
+"E472": "Емулгатор",
+"E110": "Сънсет жълто FCF",
+"E304": "аскорбил палмитат",
+"E422": "глицерол (глицерин)",
+"E470a": "натриеви, калиеви и калциеви соли на мастни киселини",
+"E102": "тартразин",
+"E132": "индиготин",
+"E132": "индигокармин",
+"E924": "калиев бромат",
+"E151": "Брилянтно черно BN",
+"E210": "Бензоена киселина",
+"E296": "Ябълчена киселина",
+}
