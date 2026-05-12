@@ -1,6 +1,4 @@
 import streamlit as st
-bad_ingredients = ["E310", "Propyl Gallate", "E320", "E322", "Lecithin", "E553b", "Talc", "Talcum"]
-import streamlit as st
 import easyocr
 import numpy as np
 from PIL import Image
@@ -26,4 +24,8 @@ harmful_e_numbers = {
 "E151": "Брилянтно черно BN",
 "E210": "Бензоена киселина",
 "E296": "Ябълчена киселина",
+"E310": "пропил галат",
+"E320": "бутилхидроксианизол",
+"E322": "Лецитин",
+"E553b": "талк"
 }
