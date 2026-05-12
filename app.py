@@ -1,7 +1,7 @@
 import streamlit as st
 import easyocr
-import numpy as np
 from PIL import Image
+import numpy as np
 # Вредни Е-номера
 harmful_e_numbers = {
 "E407": "Карагенан (възпаления, храносмилателни проблеми)",
@@ -29,3 +29,40 @@ harmful_e_numbers = {
 "E322": "Лецитин",
 "E553b": "талк"
 }
+@st.cache_resource
+def load_ocr_model():
+    return easyocr.Reader(['en'], gpu=False)
+
+reader = load_ocr_model()
+
+st.title("🧪 Food Chemistry Scanner")
+st.write("Upload an ingredient label to analyze chemical additives.")
+
+# File uploader widget
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+
+if uploaded_file is not None:
+    # 1. Load and display image using Pillow (PIL)
+    image = Image.open(uploaded_file)
+    st.image(image, caption='Uploaded Label', use_column_width=True)
+    
+    # 2. Convert Pillow image to a NumPy array for EasyOCR
+    image_np = np.array(image)
+    
+    with st.spinner("Analyzing ingredients..."):
+        # 3. Perform OCR
+        results = reader.readtext(image_np)
+        
+        # Extract just the text from OCR results
+        extracted_text = " ".join([res[1] for res in results]).lower()
+        
+    st.subheader("Extracted Ingredient Text:")
+    st.info(extracted_text)
+
+    
+    found_chemicals = [chem for chem in harmful_e_numbers if chem in extracted_text]
+    
+    if found_chemicals:
+        st.warning(f"⚠️ Potential chemical additives found: {', '.join(found_chemicals)}")
+    else:
+        st.success("No common additives from the watchlist detected.")
