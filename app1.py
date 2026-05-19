@@ -34,7 +34,7 @@ harmful_e_numbers = {
 
 @st.cache_resource
 def load_ocr_model():
-    # Added 'bg' to download and use the Bulgarian language pack alongside English
+    
     return easyocr.Reader(['en', 'bg'], gpu=False)
 
 reader = load_ocr_model()
@@ -55,13 +55,13 @@ if uploaded_file is not None:
         results = reader.readtext(image_np)
         extracted_text = " ".join([res[1] for res in results]).upper()
         
-        # Normalize text by removing spaces within E-numbers (e.g., "E 407" becomes "E407")
+       
         normalized_text = re.sub(r'E\s+(\d)', r'E\d', extracted_text)
         
     st.subheader("Extracted Ingredient Text:")
     st.info(extracted_text)
 
-    # Search using the cleaned, normalized text
+    
     found_chemicals = [chem for chem in harmful_e_numbers if chem in normalized_text]
     
     if found_chemicals:
